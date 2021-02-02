@@ -22,7 +22,7 @@ public class Player extends SpaceObject {
 		
 		maxSpeed = 300;
 		acceleration = 200;
-		deceleration = 10;
+		deceleration = 75;
 		
 		shapex = new float[4];
 		shapey = new float[4];
@@ -91,10 +91,10 @@ public class Player extends SpaceObject {
 	
 	public void draw(ShapeRenderer sr) {
 		
-		sr.setColor(1, 1, 1, 1);
-		
+		sr.setColor(0, 255, 0, 1);
+
 		sr.begin(ShapeType.Line);
-		
+
 		for(int i = 0, j = shapex.length - 1;
 			i < shapex.length;
 			j = i++) {
@@ -102,7 +102,7 @@ public class Player extends SpaceObject {
 			sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
 			
 		}
-		
+
 		sr.end();
 		
 	}
