@@ -11,7 +11,7 @@ public class Main {
 			new LwjglApplicationConfiguration();
 		cfg.title = "Asteroids";
 		cfg.width = 500;
-		cfg.height = 400;
+		cfg.height = 500;
 		cfg.useGL30 = false;
 		cfg.resizable = false;
 		

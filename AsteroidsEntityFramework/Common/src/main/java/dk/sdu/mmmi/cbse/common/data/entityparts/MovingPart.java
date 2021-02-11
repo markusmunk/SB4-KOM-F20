@@ -61,6 +61,9 @@ public class MovingPart
         this.up = up;
     }
 
+   
+    
+
     @Override
     public void process(GameData gameData, Entity entity) {
         PositionPart positionPart = entity.getPart(PositionPart.class);

@@ -5,11 +5,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dk.sdu.mmmi.cbse.common.astroidSystem.AsteroidControlSystem;
+import dk.sdu.mmmi.cbse.common.astroidSystem.AsteroidPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.enemySystem.EnemyControlSystem;
+import dk.sdu.mmmi.cbse.enemySystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
 import dk.sdu.mmmi.cbse.playersystem.PlayerPlugin;
@@ -44,10 +48,21 @@ public class Game
         );
 
         IGamePluginService playerPlugin = new PlayerPlugin();
-
         IEntityProcessingService playerProcess = new PlayerControlSystem();
         entityPlugins.add(playerPlugin);
         entityProcessors.add(playerProcess);
+        
+        IGamePluginService enemyPlugin = new EnemyPlugin();
+        IEntityProcessingService enemyProcess = new EnemyControlSystem();
+        entityPlugins.add(enemyPlugin);
+        entityProcessors.add(enemyProcess);
+        
+        IGamePluginService asteroidPlugin = new AsteroidPlugin();
+        IEntityProcessingService asteroidProcess = new AsteroidControlSystem();
+        entityPlugins.add(asteroidPlugin);
+        entityProcessors.add(asteroidProcess);
+        
+        
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
             iGamePlugin.start(gameData, world);
@@ -79,8 +94,8 @@ public class Game
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-
-            sr.setColor(1, 1, 1, 1);
+            float[] colors = entity.getColorRgba();
+            sr.setColor(colors[0], colors[1], colors[2], colors[3]);
 
             sr.begin(ShapeRenderer.ShapeType.Line);
 
