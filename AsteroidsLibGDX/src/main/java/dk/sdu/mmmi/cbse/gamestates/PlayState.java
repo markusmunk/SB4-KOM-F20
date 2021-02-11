@@ -18,7 +18,7 @@ public class PlayState extends GameState {
 	}
 	
 	public void init() {
-		enemys = new Enemy[1000];
+		enemys = new Enemy[10];
 		sr = new ShapeRenderer();
 		
 		player = new Player();
@@ -30,11 +30,17 @@ public class PlayState extends GameState {
 
 		
 	}
-	
+	public void collision(Player player, Enemy enemy){
+		if((int)player.getX() == (int)enemy.getX() && (int)player.getY() == (int)enemy.getY() ){
+			System.out.printf("Collision");
+		}
+	}
 	public void update(float dt) {
 		
 		handleInput();
-		
+		for(Enemy enemy: enemys){
+			collision(this.player, enemy);
+		}
 		player.update(dt);
 		for (int i =0; i < enemys.length; i++){
 			enemys[i].update(dt);
@@ -53,6 +59,7 @@ public class PlayState extends GameState {
 		player.setLeft(GameKeys.isDown(GameKeys.LEFT));
 		player.setRight(GameKeys.isDown(GameKeys.RIGHT));
 		player.setUp(GameKeys.isDown(GameKeys.UP));
+		player.setShoot(GameKeys.isPressed(GameKeys.SPACE));
 	}
 	
 	public void dispose() {}

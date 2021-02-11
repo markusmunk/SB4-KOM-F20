@@ -5,11 +5,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.cbse.main.Game;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class Player extends SpaceObject {
 	
 	private boolean left;
 	private boolean right;
 	private boolean up;
+	private boolean shoot;
+	private LinkedList<Bullet> bullets;
 	
 	private float maxSpeed;
 	private float acceleration;
@@ -29,6 +34,7 @@ public class Player extends SpaceObject {
 		
 		radians = 3.1415f / 2;
 		rotationSpeed = 3;
+		bullets = new LinkedList<Bullet>();
 		
 	}
 	
@@ -49,6 +55,7 @@ public class Player extends SpaceObject {
 	public void setLeft(boolean b) { left = b; }
 	public void setRight(boolean b) { right = b; }
 	public void setUp(boolean b) { up = b; }
+	public void setShoot(boolean b) { this.shoot = b; }
 	
 	public void update(float dt) {
 		
@@ -80,17 +87,32 @@ public class Player extends SpaceObject {
 		// set position
 		x += dx * dt;
 		y += dy * dt;
-		
+
+		//shooting
+		if(this.shoot){
+
+			this.bullets.add(new Bullet(this.x + MathUtils.cos(this.radians)*8, this.y + MathUtils.sin(this.radians)*8, this.radians, 100));
+			if(bullets.size() > 5){
+				this.bullets.remove();
+			}
+
+		}
+		for(Bullet bullet: bullets){
+			bullet.update(dt);
+		}
+
+
 		// set shape
 		setShape();
 		
 		// screen wrap
 		wrap();
-		
+		//removes the last bullet
+
 	}
 	
 	public void draw(ShapeRenderer sr) {
-		
+		//draw player
 		sr.setColor(0, 255, 0, 1);
 
 		sr.begin(ShapeType.Line);
@@ -104,7 +126,11 @@ public class Player extends SpaceObject {
 		}
 
 		sr.end();
-		
+		//draw bullet
+		for(Bullet bullet: bullets){
+			bullet.draw(sr);
+		}
+
 	}
 	
 }
