@@ -47,6 +47,11 @@
             <classifier>natives-desktop</classifier>
             <version>1.7.2</version>
             <scope>compile</scope>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>javax.vecmath</groupId>
+            <artifactId>vecmath</artifactId>
+            <version>1.5.2</version>
+        </dependency>
     </dependencies>
 </project>
