@@ -14,6 +14,9 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
  */
 public class FiringPart implements EntityPart {
     private boolean fire;
+
+    public FiringPart() {
+    }
     
     @Override
     public void process(GameData gameData, Entity entity) {

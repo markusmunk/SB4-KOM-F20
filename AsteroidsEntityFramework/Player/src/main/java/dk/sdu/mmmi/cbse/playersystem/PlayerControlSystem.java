@@ -1,5 +1,8 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
+import dk.sdu.mmmi.cbse.bulletSystem.Bullet;
+import dk.sdu.mmmi.cbse.bulletSystem.BulletControlSystem;
+import dk.sdu.mmmi.cbse.bulletSystem.BulletPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.LEFT;
@@ -11,17 +14,21 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.FiringPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
+import java.util.ArrayList;
 
 /**
  *
  * @author jcs
  */
 public class PlayerControlSystem implements IEntityProcessingService {
-
+    private ArrayList<IGamePluginService> bulletPlugins = new ArrayList<>();
+    private IEntityProcessingService bulletProcess = new BulletControlSystem();
+    
     @Override
     public void process(GameData gameData, World world) {
 
@@ -36,6 +43,16 @@ public class PlayerControlSystem implements IEntityProcessingService {
             firingPart.setFire(gameData.getKeys().isPressed(SPACE));
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
+            firingPart.process(gameData, player);
+            if(firingPart.isFire()){
+                IGamePluginService bulletPlugin = new BulletPlugin();
+                bulletPlugins.add(bulletPlugin);
+                bulletPlugin.start(gameData, world);
+                
+            }
+            for(Entity bullet: world.getEntities(Bullet.class)){
+                bulletProcess.process(gameData, world);
+            }
 
             updateShape(player);
         }
