@@ -7,6 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.FiringPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import com.badlogic.gdx.math.MathUtils;
 
 public class PlayerPlugin implements IGamePluginService {
 
@@ -24,7 +25,7 @@ public class PlayerPlugin implements IGamePluginService {
     }
 
     private Entity createPlayerShip(GameData gameData) {
-
+        //player attributes
         float deacceleration = 10;
         float acceleration = 200;
         float maxSpeed = 300;
@@ -34,11 +35,21 @@ public class PlayerPlugin implements IGamePluginService {
         float radians = 3.1415f / 2;
         float[] colors = {0f, 255f, 0f, 1f};
         
+        //bullet attributes
+        float bulletDeacceleration = 10;
+        float bulletAcceleration = 200;
+        float bulletMaxSpeed = 300;
+        
+        //unused
+        float bulletStartX = x + MathUtils.cos(radians)*8;
+        float bulletStartY = x + MathUtils.sin(radians)*8;
+        
+        
         Entity playerShip = new Player();
         playerShip.setColorRgba(colors);
         playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
-        playerShip.add(new FiringPart());
+        playerShip.add(new FiringPart(bulletDeacceleration, bulletAcceleration, bulletMaxSpeed));
         
         return playerShip;
     }
