@@ -8,6 +8,8 @@ import static dk.sdu.mmmi.cbse.common.data.GameKeys.SPACE;
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.UP;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.FiringPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.HitBoxPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
@@ -31,20 +33,26 @@ public class PlayerControlSystem implements IEntityProcessingService {
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);
             FiringPart firingPart = player.getPart(FiringPart.class);
-
+            HitBoxPart hitBoxPart = player.getPart(HitBoxPart.class);
+            LifePart lifePart = player.getPart(LifePart.class);
             movingPart.setLeft(gameData.getKeys().isDown(LEFT));
             movingPart.setRight(gameData.getKeys().isDown(RIGHT));
             movingPart.setUp(gameData.getKeys().isDown(UP));
             firingPart.setFire(gameData.getKeys().isPressed(SPACE));
             movingPart.process(gameData, player);
+            lifePart.process(gameData, player);
             positionPart.process(gameData, player);
             firingPart.process(gameData, player);
+            hitBoxPart.process(gameData, player);
             for(Entity bullet: firingPart.getBullets()){
                 if(world.getEntity(bullet.getID()) instanceof Entity){}
                 else {
                     world.addEntity(bullet);
                 }
                 updateBulletShape(bullet);
+            }
+            if(lifePart.isIsHit()){
+                world.removeEntity(player);
             }
             updateShape(player);
         }

@@ -25,12 +25,21 @@ public class MovingPart
     private float deceleration, acceleration;
     private float maxSpeed, rotationSpeed;
     private boolean left, right, up;
+    private boolean canWrap;
 
     public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed) {
         this.deceleration = deceleration;
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
         this.rotationSpeed = rotationSpeed;
+        this.canWrap = true;
+    }
+    public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed, boolean canWrap) {
+        this.deceleration = deceleration;
+        this.acceleration = acceleration;
+        this.maxSpeed = maxSpeed;
+        this.rotationSpeed = rotationSpeed;
+        this.canWrap = canWrap;
     }
 
     public void setDeceleration(float deceleration) {
@@ -100,25 +109,42 @@ public class MovingPart
 
         // set position
         x += dx * dt;
-        if (x > gameData.getDisplayWidth()) {
-            x = 0;
-        }
-        else if (x < 0) {
-            x = gameData.getDisplayWidth();
-        }
-
         y += dy * dt;
-        if (y > gameData.getDisplayHeight()) {
-            y = 0;
-        }
-        else if (y < 0) {
-            y = gameData.getDisplayHeight();
-        }
+        float[] xy = wrap(x,y,gameData, canWrap);
+        positionPart.setX(xy[0]);
+        positionPart.setY(xy[1]);
+        
+        
 
-        positionPart.setX(x);
-        positionPart.setY(y);
+        
 
         positionPart.setRadians(radians);
     }
+    public float[] wrap(float x, float y, GameData gameData, boolean canWrap){
+        float[] coordinates = {x, y};
+        float dt = gameData.getDelta();
+        if(canWrap){
+            if (x > gameData.getDisplayWidth()) {
+                x = 0;
+                coordinates[0] = x;
+            }
+            else if (x < 0) {
+                x = gameData.getDisplayWidth();
+                coordinates[0] = x;
+            }
+
+            if (y > gameData.getDisplayHeight()) {
+                y = 0;
+                coordinates[1] = y;
+            }
+            else if (y < 0) {
+                y = gameData.getDisplayHeight();
+                coordinates[1] = y;
+            }
+            return coordinates;
+        }
+        
+        return coordinates;
+    }    
 
 }

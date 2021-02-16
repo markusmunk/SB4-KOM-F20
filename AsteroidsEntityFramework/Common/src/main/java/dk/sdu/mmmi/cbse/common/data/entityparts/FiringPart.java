@@ -18,12 +18,13 @@ import java.util.ArrayList;
     private ArrayList<Entity> bullets;
     private float deceleration, acceleration;
     private float maxSpeed;
+    private String owner;
 
-    public FiringPart(float deceleration, float acceleration, float maxSpeed) {
+    public FiringPart(float deceleration, float acceleration, float maxSpeed, String owner) {
         this.deceleration = deceleration;
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
-        
+        this.owner = owner;
         this.bullets = new ArrayList<>();
     }
     
@@ -36,20 +37,23 @@ import java.util.ArrayList;
            
             PositionPart playerPosition = entity.getPart(PositionPart.class);
             
-            
-            MovingPart movingPart = new MovingPart(deceleration, acceleration, maxSpeed,0);
+            HitBoxPart hitBoxPart = new HitBoxPart(4,4,playerPosition.getX(), playerPosition.getY(), "bullet");
+            hitBoxPart.addIgnore(this.owner);
+            MovingPart movingPart = new MovingPart(deceleration, acceleration, maxSpeed,0, false);
             PositionPart positionPart = new PositionPart(playerPosition.getX(), playerPosition.getY(), playerPosition.getRadians());
             movingPart.setLeft(false);
             movingPart.setRight(false);
             movingPart.setUp(true);
             bullet.add(positionPart);
             bullet.add(movingPart);
+            bullet.add(hitBoxPart);
             bullets.add(bullet);
         }
         if(!bullets.isEmpty()){
             for(Entity bullet : bullets){
                 bullet.getPart(MovingPart.class).process(gameData, bullet);
                 bullet.getPart(PositionPart.class).process(gameData, bullet);
+                bullet.getPart(HitBoxPart.class).process(gameData, bullet);
             }
         }
         

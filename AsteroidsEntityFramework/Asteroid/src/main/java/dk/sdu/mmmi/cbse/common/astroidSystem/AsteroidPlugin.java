@@ -7,6 +7,8 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import com.badlogic.gdx.math.MathUtils;
+import dk.sdu.mmmi.cbse.common.data.entityparts.HitBoxPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import java.util.ArrayList;
 
 public class AsteroidPlugin implements IGamePluginService {
@@ -45,6 +47,10 @@ public class AsteroidPlugin implements IGamePluginService {
         playerShip.setColorRgba(colors);
         playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
+        HitBoxPart newHitBox = new HitBoxPart(37, 37, x, y, "asteroid");
+        newHitBox.addIgnore("asteroid");
+        playerShip.add(newHitBox);
+        playerShip.add(new LifePart(1,1)); //1 and 1 doesnt matter at the moment
         
         return playerShip;
     }

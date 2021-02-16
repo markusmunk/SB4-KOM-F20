@@ -8,6 +8,8 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import com.badlogic.gdx.math.MathUtils;
+import dk.sdu.mmmi.cbse.common.data.entityparts.HitBoxPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 
 public class PlayerPlugin implements IGamePluginService {
 
@@ -36,9 +38,9 @@ public class PlayerPlugin implements IGamePluginService {
         float[] colors = {0f, 255f, 0f, 1f};
         
         //bullet attributes
-        float bulletDeacceleration = 10;
-        float bulletAcceleration = 200;
-        float bulletMaxSpeed = 300;
+        float bulletDeacceleration = 0;
+        float bulletAcceleration = 600;
+        float bulletMaxSpeed = 500;
         
         //unused
         float bulletStartX = x + MathUtils.cos(radians)*8;
@@ -49,7 +51,11 @@ public class PlayerPlugin implements IGamePluginService {
         playerShip.setColorRgba(colors);
         playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
-        playerShip.add(new FiringPart(bulletDeacceleration, bulletAcceleration, bulletMaxSpeed));
+        playerShip.add(new FiringPart(bulletDeacceleration, bulletAcceleration, bulletMaxSpeed, "player"));
+        playerShip.add(new LifePart(1,1)); //1 and 1 doesnt matter at the moment;
+        HitBoxPart hitBoxPart = new HitBoxPart(9, 9, x, y, "player");
+        hitBoxPart.addIgnore("bullet");
+        playerShip.add(hitBoxPart);
         
         return playerShip;
     }
