@@ -114,7 +114,7 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         HitBoxPart newHitBox1 = new HitBoxPart(hitBoxwidth, hitBoxHeight, x, y, "asteroid");
         newHitBox1.addIgnore("asteroid");
         asteroid1.add(newHitBox1);
-        asteroid1.add(new LifePart(lifeCount,1)); //1 and 1 doesnt matter at the moment
+        asteroid1.add(new LifePart(lifeCount,1)); // 1 doesnt matter at the moment
         
         asteroid2.setColorRgba(colors);
         asteroid2.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));

@@ -34,7 +34,7 @@ public class AsteroidPlugin implements IGamePluginService {
 
         float deacceleration = 10;
         float acceleration = 200;
-        float maxSpeed = 100;
+        float maxSpeed = 50;
         float rotationSpeed = 5;
         float x = MathUtils.random(0,gameData.getDisplayWidth());
         float y = MathUtils.random(0,gameData.getDisplayHeight());
@@ -50,7 +50,7 @@ public class AsteroidPlugin implements IGamePluginService {
         HitBoxPart newHitBox = new HitBoxPart(37, 37, x, y, "asteroid");
         newHitBox.addIgnore("asteroid");
         playerShip.add(newHitBox);
-        playerShip.add(new LifePart(1,1)); //1 and 1 doesnt matter at the moment
+        playerShip.add(new LifePart(1,1)); //the last 1 doesnt matter at the moment
         
         return playerShip;
     }

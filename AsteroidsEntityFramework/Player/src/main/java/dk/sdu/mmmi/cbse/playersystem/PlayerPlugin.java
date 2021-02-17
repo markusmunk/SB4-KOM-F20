@@ -51,7 +51,7 @@ public class PlayerPlugin implements IGamePluginService {
         playerShip.setColorRgba(colors);
         playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
-        playerShip.add(new FiringPart(bulletDeacceleration, bulletAcceleration, bulletMaxSpeed, "player"));
+        playerShip.add(new FiringPart(bulletDeacceleration, bulletAcceleration, bulletMaxSpeed, "player", true));
         playerShip.add(new LifePart(1,1)); //1 and 1 doesnt matter at the moment;
         HitBoxPart hitBoxPart = new HitBoxPart(9, 9, x, y, "player");
         hitBoxPart.addIgnore("bullet");

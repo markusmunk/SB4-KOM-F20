@@ -105,8 +105,12 @@ public class Game
         for (Entity entity : world.getEntities()) {
             float[] colors = entity.getColorRgba();
             sr.setColor(colors[0], colors[1], colors[2], colors[3]);
-
-            sr.begin(ShapeRenderer.ShapeType.Line);
+            
+            if(entity.isFill()){
+                sr.begin(ShapeRenderer.ShapeType.Filled);
+            } else {
+                sr.begin(ShapeRenderer.ShapeType.Line);
+            }
 
             float[] shapex = entity.getShapeX();
             float[] shapey = entity.getShapeY();

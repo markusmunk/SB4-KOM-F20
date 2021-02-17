@@ -49,10 +49,17 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 else {
                     world.addEntity(bullet);
                 }
+                LifePart lp = bullet.getPart(LifePart.class);
+                if(lp.isIsHit()){
+                    world.removeEntity(bullet);
+                }
                 updateBulletShape(bullet);
             }
             if(lifePart.isIsHit()){
                 world.removeEntity(player);
+                for(Entity bullet: firingPart.getBullets()){
+                    world.removeEntity(bullet);
+                }
             }
             updateShape(player);
         }

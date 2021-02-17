@@ -28,70 +28,65 @@ public class CollisionControlSystem implements IPostEntityProcessingService {
     
     @Override
     public void process(GameData gameData, World world) {
-
         for (Entity entity : world.getEntities()) {
-            boolean hitable = true;
-            HitBoxPart hitBox;
-            if(entity.getPart(HitBoxPart.class) instanceof HitBoxPart){
-                hitBox = entity.getPart(HitBoxPart.class);
-                for(Entity entity1 : world.getEntities()){
-                    if(entity.equals(entity1)){
-                        //System.out.println("I've reached the same entity");
-                    } else{
-                        //System.out.println(entity);
-                    //collsion logic
-                        HitBoxPart hitBox1;
-                        if(entity1.getPart(HitBoxPart.class) instanceof HitBoxPart){
-                            hitBox1 = entity1.getPart(HitBoxPart.class);
-                            
-                            float entityX = hitBox.getX();
-                            float entityY = hitBox.getY();
-                            float entityWidth = hitBox.getWidth();
-                            float entityHeight = hitBox.getHeight();
-                    
-                            float entity1X = hitBox1.getX();
-                            float entity1Y = hitBox1.getY();
-                            float entity1Width = hitBox1.getWidth();
-                            float entity1Height = hitBox1.getHeight();
-        
-                            if(entityX < entity1X + entity1Width && 
-                                entityX + entityWidth > entity1X &&
-                                entityY < entity1Y + entity1Height &&
-                                entityHeight + entityY > entity1Y){
-                                for(String s: hitBox.getIgnorations()){
-                                    System.out.println(s + " " + hitBox1.getOwner());
-                                    System.out.println(s.equals(hitBox1.getOwner()));
-                                    if(s == hitBox1.getOwner()){
-                                        hitable = false;
-                                    }
-                                }
-                                if(hitable){
-                                    LifePart lifePart;
-                                    if(entity.getPart(LifePart.class) instanceof LifePart){
-                                        
-                                        lifePart = entity.getPart(LifePart.class);
-                                        lifePart.setIsHit(true);
-                                    }
-                                    
-                                    /*
-                                    world.removeEntity(entity);
-                                    world.removeEntity(entity1);
-                                    */
-                                    
-                                }
-                                
-            
-                            }
-                        }
-                        
-        
-                    }
+            for(Entity entity1 : world.getEntities()){
+                if(entity.equals(entity1)){
+                } else{ 
+                //collsion logic
+                    collisionDetection(entity, entity1);
                 }
             }
-            
-            
         }
     }
     
-
+    private void collisionDetection(Entity entity, Entity entity1){
+        HitBoxPart hitBox;
+        HitBoxPart hitBox1;
+        if(entity.getPart(HitBoxPart.class) instanceof HitBoxPart){
+            hitBox = entity.getPart(HitBoxPart.class);
+            if(entity1.getPart(HitBoxPart.class) instanceof HitBoxPart){
+                hitBox1 = entity1.getPart(HitBoxPart.class);
+                            
+                float entityX = hitBox.getX();
+                float entityY = hitBox.getY();
+                float entityWidth = hitBox.getWidth();
+                float entityHeight = hitBox.getHeight();
+                    
+                float entity1X = hitBox1.getX();
+                float entity1Y = hitBox1.getY();
+                float entity1Width = hitBox1.getWidth();
+                float entity1Height = hitBox1.getHeight();
+        
+                if(entityX < entity1X + entity1Width && 
+                    entityX + entityWidth > entity1X &&
+                    entityY < entity1Y + entity1Height &&
+                    entityHeight + entityY > entity1Y){
+                      actionOnCollision(entity, entity1);
+                }
+            }
+        }
+    }
+    
+    private void actionOnCollision(Entity entity, Entity entity1){
+        HitBoxPart hitBox = entity.getPart(HitBoxPart.class);
+        HitBoxPart hitBox1 = entity1.getPart(HitBoxPart.class);
+        boolean hitable = true;
+        for(String s: hitBox.getIgnorations()){
+            if(s == hitBox1.getOwner()){
+                hitable = false;
+            }
+        }
+        if(hitable){
+            LifePart lifePart;
+            LifePart lifePart1;
+            if(entity.getPart(LifePart.class) instanceof LifePart){
+                lifePart = entity.getPart(LifePart.class);
+                lifePart.setIsHit(true);
+            }
+            if(entity1.getPart(LifePart.class) instanceof LifePart){
+                lifePart1 = entity1.getPart(LifePart.class);
+                lifePart1.setIsHit(true);
+            }  
+        }   
+    }
 }
