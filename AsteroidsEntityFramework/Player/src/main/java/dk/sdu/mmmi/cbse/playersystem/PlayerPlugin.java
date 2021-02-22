@@ -39,7 +39,7 @@ public class PlayerPlugin implements IGamePluginService {
         
         //bullet attributes
         float bulletDeacceleration = 0;
-        float bulletAcceleration = 600;
+        float bulletAcceleration = 20000;
         float bulletMaxSpeed = 500;
         
         //unused

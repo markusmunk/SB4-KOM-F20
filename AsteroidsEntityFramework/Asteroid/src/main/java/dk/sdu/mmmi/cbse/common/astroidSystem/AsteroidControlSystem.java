@@ -94,16 +94,16 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         float hitBoxHeight = hitBoxPart.getHeight()/2;
         float hitBoxwidth = hitBoxPart.getWidth()/2;
         float deacceleration = 10;
-        float acceleration = 200;
+        float acceleration = 2000;
         float maxSpeed = 100;
         float rotationSpeed = 5;
         float x = positionPart.getX();
         float y = positionPart.getY();
         float[] colors = {0f, 0f, 255f, 1f};
         float random = MathUtils.random(0, 3.1415f*2);
-        float radians = positionPart.getRadians();
-        float radians1 = radians + (float)(Math.PI/2); 
-        float radians2 = radians - (float)(Math.PI/2);
+        float radians = hitBoxPart.getHitRadians();
+        float radians1 = radians + (float)(Math.PI/3); 
+        float radians2 = radians - (float)(Math.PI/3);
       
         
         Entity asteroid1 = new Asteroid();
@@ -122,7 +122,7 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         HitBoxPart newHitBox2 = new HitBoxPart(hitBoxwidth, hitBoxHeight, x, y, "asteroid");
         newHitBox2.addIgnore("asteroid");
         asteroid2.add(newHitBox2);
-        asteroid2.add(new LifePart(lifeCount,1));
+        asteroid2.add(new LifePart(lifeCount,1)); // 1 doesnt matter at the moment
         Entity[] array = {asteroid1, asteroid2};
         return array;
     }

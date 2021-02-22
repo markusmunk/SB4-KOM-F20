@@ -70,6 +70,8 @@ public class CollisionControlSystem implements IPostEntityProcessingService {
     private void actionOnCollision(Entity entity, Entity entity1){
         HitBoxPart hitBox = entity.getPart(HitBoxPart.class);
         HitBoxPart hitBox1 = entity1.getPart(HitBoxPart.class);
+        PositionPart positionPart = entity.getPart(PositionPart.class);
+        PositionPart positionPart1 = entity1.getPart(PositionPart.class);
         boolean hitable = true;
         for(String s: hitBox.getIgnorations()){
             if(s == hitBox1.getOwner()){
@@ -82,10 +84,12 @@ public class CollisionControlSystem implements IPostEntityProcessingService {
             if(entity.getPart(LifePart.class) instanceof LifePart){
                 lifePart = entity.getPart(LifePart.class);
                 lifePart.setIsHit(true);
+                hitBox.setHitRadians(positionPart1.getRadians());
             }
             if(entity1.getPart(LifePart.class) instanceof LifePart){
                 lifePart1 = entity1.getPart(LifePart.class);
                 lifePart1.setIsHit(true);
+                hitBox1.setHitRadians(positionPart.getRadians());
             }  
         }   
     }

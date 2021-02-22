@@ -19,6 +19,7 @@ public class HitBoxPart implements EntityPart{
     private boolean isHit;
     private ArrayList<String> ignorations = new ArrayList<>();
     private String owner;
+    private float hitRadians;
 
     public HitBoxPart(float width, float height, float cX, float cY, String owner) {
         this.x = cX - width/2;
@@ -32,6 +33,14 @@ public class HitBoxPart implements EntityPart{
         
     }
 
+    public void setHitRadians(float hitRadias) {
+        this.hitRadians = hitRadias;
+    }
+
+    public float getHitRadians() {
+        return hitRadians;
+    }
+    
     public String getOwner() {
         return owner;
     }
