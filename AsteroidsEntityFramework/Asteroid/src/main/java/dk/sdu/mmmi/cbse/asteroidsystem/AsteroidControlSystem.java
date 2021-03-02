@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.common.astroidSystem;
+package dk.sdu.mmmi.cbse.asteroidsystem;
 
 import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.cbse.common.data.Entity;
