@@ -66,6 +66,7 @@
         -->
                     
     
+<<<<<<< HEAD
     
     <org.osgi.service.http.port>8080</org.osgi.service.http.port>
                     
@@ -194,6 +195,44 @@
           
           
           <!--
+=======
+    </properties>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>poms</module>
+        <module>provision</module>
+        <module>OSGiCore</module>
+        <module>OSGiCommon</module>
+        <module>OSGiCommonAsteroids</module>
+        <module>OSGiCommonBullet</module>
+        <module>OSGiCommonEnemy</module>
+        <module>OSGiAsteroidSplitter</module>
+        <module>OSGiAsteroids</module>
+        <module>OSGiLaser</module>
+        <module>OSGiEnemy</module>
+        <module>OSGiLibGDX</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.ops4j</groupId>
+                <artifactId>maven-pax-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <!--
+                     | some example Pax-Runner settings
+                    -->
+                    <provision>
+                        <param>--platform=felix</param>
+                        <param>--vmOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</param>
+                    </provision>                    
+                </configuration>
+                <executions>
+                    <!--
+>>>>>>> master
                      | uncomment to auto-generate IDE files
                     <execution>
                       <id>ide-support</id>
