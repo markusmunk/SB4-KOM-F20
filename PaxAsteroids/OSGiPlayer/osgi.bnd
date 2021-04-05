@@ -1,0 +1,2 @@
+Bundle-Activator: dk.sdu.mmmi.osgiplayer.Activator
+Bundle-SymbolicName: OSGiPlayer

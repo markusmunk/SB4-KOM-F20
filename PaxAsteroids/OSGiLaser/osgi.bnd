@@ -1,0 +1,2 @@
+Bundle-Activator: dk.sdu.mmmi.cbse.laserweapon.Activator
+Bundle-SymbolicName: OSGiLaser
